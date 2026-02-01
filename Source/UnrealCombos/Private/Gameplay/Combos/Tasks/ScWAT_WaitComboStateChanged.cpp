@@ -4,6 +4,8 @@
 
 #include "Gameplay/Combos/ScWComboStateComponent.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(ScWAT_WaitComboStateChanged)
+
 //~ Begin Initialize
 UScWAT_WaitComboStateChanged* UScWAT_WaitComboStateChanged::WaitComboStateChanged(UGameplayAbility* InOwningAbility, UScWComboStateComponent* InComboStateComponent)
 {

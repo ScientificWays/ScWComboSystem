@@ -7,6 +7,8 @@
 
 #include "Gameplay/Handhelds/ScWHandheld.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(ScWHandheldFragment_Combo)
+
 UScWHandheldFragment_Combo::UScWHandheldFragment_Combo()
 {
 	PostSwingComboTimeWindow = 0.4f;

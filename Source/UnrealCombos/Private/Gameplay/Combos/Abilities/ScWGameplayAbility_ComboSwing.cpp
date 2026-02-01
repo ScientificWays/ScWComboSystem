@@ -9,6 +9,8 @@
 #include "Gameplay/Tasks/ScWAT_WaitDelay.h"
 #include "Gameplay/Handhelds/ScWHandheldData_Melee.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(ScWGameplayAbility_ComboSwing)
+
 UScWGameplayAbility_ComboSwing::UScWGameplayAbility_ComboSwing()
 {
 	

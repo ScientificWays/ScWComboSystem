@@ -11,6 +11,8 @@
 #include "Gameplay/Combos/ScWComboMoveData.h"
 #include "Gameplay/ScWGameplayFunctionLibrary.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(ScWComboStateComponent)
+
 UScWComboStateComponent::UScWComboStateComponent()
 {
 	

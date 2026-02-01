@@ -7,6 +7,8 @@
 #include "Gameplay/ScWDamageType.h"
 #include "Gameplay/Handhelds/ScWHandheld.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(ScWComboData)
+
 UScWComboData::UScWComboData()
 {
 	DisplayName = FText::FromString(TEXT("Unnamed Combo"));

@@ -2,6 +2,8 @@
 
 #include "Gameplay/Combos/ScWComboMoveData.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(ScWComboMoveData)
+
 UScWComboMoveData::UScWComboMoveData()
 {
 	DisplayName = FText::FromString(TEXT("Unnamed ComboMove"));
