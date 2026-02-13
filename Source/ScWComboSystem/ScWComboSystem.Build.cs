@@ -1,10 +1,11 @@
 // Scientific Ways
 
 using UnrealBuildTool;
+using System.IO; // for Path
 
-public class UnrealCombos : ModuleRules
+public class ScWComboSystem : ModuleRules
 {
-	public UnrealCombos(ReadOnlyTargetRules Target) : base(Target)
+	public ScWComboSystem(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
@@ -16,14 +17,15 @@ public class UnrealCombos : ModuleRules
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			"Core",
-			"EngineSettings",
 
 			"GameplayAbilities",
 			"GameplayTags",
 			"GameplayTasks",
+
 			"Networking",
 
-			"UnrealCommons",
+			"ScWGameCore",
+			"ScWEquipmentSystem",
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]

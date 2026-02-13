@@ -1,11 +1,10 @@
 // Scientific Ways
 
-#include "Gameplay/Combos/ScWComboData.h"
+#include "ComboSystem/ScWComboData.h"
 
-#include "Gameplay/Combos/ScWComboMoveData.h"
+#include "ComboSystem/ScWComboMoveData.h"
 
-#include "Gameplay/ScWDamageType.h"
-#include "Gameplay/Handhelds/ScWHandheld.h"
+#include "Damage/ScWDamageType.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(ScWComboData)
 
@@ -23,7 +22,7 @@ UScWComboData::UScWComboData()
 }
 
 //~ Begin Power
-float UScWComboData::BP_GetHandheldPowerMul_Implementation(const AScWHandheld* InHandheld) const
+float UScWComboData::BP_GetEquipmentPowerMul_Implementation(const AActor* InEquipmentActor) const
 {
 	auto OutPowerMul = ComboPowerMul;
 
@@ -39,7 +38,7 @@ float UScWComboData::BP_GetHandheldPowerMul_Implementation(const AScWHandheld* I
 //~ End Power
 
 //~ Begin Damage
-float UScWComboData::BP_ModifyHandheldDamage_Implementation(const AScWHandheld* InHandheld, float InDamage) const
+float UScWComboData::BP_ModifyEquipmentDamage_Implementation(const AActor* InEquipmentActor, float InDamage) const
 {
 	float FinalDamageMul = DamageMul;
 	float FinalDamageAdditive = DamageAdditive;
@@ -55,7 +54,7 @@ float UScWComboData::BP_ModifyHandheldDamage_Implementation(const AScWHandheld* 
 	return InDamage * FinalDamageMul + FinalDamageAdditive;
 }
 
-TSubclassOf<UScWDamageType> UScWComboData::BP_ModifyHandheldDamageTypeClass_Implementation(const AScWHandheld* InHandheld, TSubclassOf<UScWDamageType> InDamageTypeClass) const
+TSubclassOf<UScWDamageType> UScWComboData::BP_ModifyEquipmentDamageTypeClass_Implementation(const AActor* InEquipmentActor, TSubclassOf<UScWDamageType> InDamageTypeClass) const
 {
 	if (OverrideDamageTypeClass)
 	{
@@ -76,7 +75,7 @@ TSubclassOf<UScWDamageType> UScWComboData::BP_ModifyHandheldDamageTypeClass_Impl
 //~ End Damage
 
 //~ Begin Swing Variants
-void UScWComboData::BP_ModifySwingVariants_Implementation(const AScWHandheld* InHandheld, const TArray<FScWMeleeSwingVariantData>& InVariants, TArray<FScWMeleeSwingVariantData>& OutVariants) const
+void UScWComboData::BP_ModifySwingVariants_Implementation(const AActor* InEquipmentActor, const TArray<FScWMeleeSwingVariantData>& InVariants, TArray<FScWMeleeSwingVariantData>& OutVariants) const
 {
 	OutVariants = OverrideSwingVariants.IsEmpty() ? InVariants : OverrideSwingVariants;
 }

@@ -1,6 +1,6 @@
 // Scientific Ways
 
-#include "Gameplay/Combos/ScWComboMoveData.h"
+#include "ComboSystem/ScWComboMoveData.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(ScWComboMoveData)
 

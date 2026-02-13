@@ -2,17 +2,17 @@
 
 #pragma once
 
-#include "UnrealCombos.h"
+#include "ScWComboSystem.h"
 
-#include "Templates/SharedPointer.h"
+#include "Abilities/Tasks/AbilityTask.h"
 
 #include "ScWAT_WaitComboMoveEvent.generated.h"
 
 /**
  *
  */
-UCLASS(meta = (DisplayName = "[ScW] AT_WaitComboMoveEvent"))
-class UNREALCOMBOS_API UScWAT_WaitComboMoveEvent : public UAbilityTask
+UCLASS(MinimalAPI, meta = (DisplayName = "[ScW] AT_WaitComboMoveEvent"))
+class UScWAT_WaitComboMoveEvent : public UAbilityTask
 {
 	GENERATED_BODY()
 
@@ -50,7 +50,7 @@ protected:
 	void OnComboMoveEventCallback();
 
 	UPROPERTY()
-	UScWComboStateComponent* ComboStateComponent = nullptr;
+	TObjectPtr<UScWComboStateComponent> ComboStateComponent = nullptr;
 
 	static const int32 EVENT_TYPE_QUEUED = 0;
 	static const int32 EVENT_TYPE_QUEUED_ACCEPTED = 1;

@@ -1,20 +1,22 @@
 // Scientific Ways
 
-#include "UnrealCombos.h"
+#include "ScWComboSystem.h"
 
-#define LOCTEXT_NAMESPACE "FUnrealCombosModule"
+#include "Modules/ModuleManager.h"
 
-void FUnrealCombosModule::StartupModule()
+#define LOCTEXT_NAMESPACE "FScWComboSystemModule"
+
+void FScWComboSystemModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 }
 
-void FUnrealCombosModule::ShutdownModule()
+void FScWComboSystemModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
 }
 
 #undef LOCTEXT_NAMESPACE
-	
-IMPLEMENT_MODULE(FUnrealCombosModule, UnrealCombos)
+
+IMPLEMENT_MODULE(FScWComboSystemModule, ScWComboSystem)

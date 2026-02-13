@@ -2,20 +2,21 @@
 
 #pragma once
 
-#include "UnrealCombos.h"
+#include "ScWComboSystem.h"
 
 #include "ScWComboMoveData.generated.h"
+
+#define MODULE_API SCWCOMBOSYSTEM_API
 
 /**
  *
  */
-UCLASS(const, Blueprintable, BlueprintType, meta = (DisplayName = "[ScW] Combo Move Data"))
-class UNREALCOMBOS_API UScWComboMoveData : public UPrimaryDataAsset
+UCLASS(MinimalAPI, Const, Blueprintable, BlueprintType, meta = (DisplayName = "[ScW] Combo Move Data"))
+class UScWComboMoveData : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 
-public:	
-
+public:
 	UScWComboMoveData();
 
 //~ Begin UI
@@ -51,3 +52,5 @@ public:
 	float MoveDamageImpactImpulseMul;
 //~ End Damage
 };
+
+#undef MODULE_API

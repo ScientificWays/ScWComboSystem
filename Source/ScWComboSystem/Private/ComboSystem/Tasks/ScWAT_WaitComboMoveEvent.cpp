@@ -1,8 +1,8 @@
 // Scientific Ways
 
-#include "Gameplay/Combos/Tasks/ScWAT_WaitComboMoveEvent.h"
+#include "ComboSystem/Tasks/ScWAT_WaitComboMoveEvent.h"
 
-#include "Gameplay/Combos/ScWComboStateComponent.h"
+#include "ComboSystem/ScWComboStateComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(ScWAT_WaitComboMoveEvent)
 

@@ -1,13 +1,13 @@
 // Scientific Ways
 
-#include "Gameplay/Combos/Abilities/ScWGameplayAbility_ComboSwing.h"
+#include "ComboSystem/Abilities/ScWGameplayAbility_ComboSwing.h"
 
-#include "Gameplay/Combos/ScWComboData.h"
-#include "Gameplay/Combos/ScWComboStateComponent.h"
-#include "Gameplay/Combos/Tasks/ScWAT_WaitComboMoveEvent.h"
+#include "AbilitySystem/Tasks/ScWAT_WaitDelay.h"
 
-#include "Gameplay/Tasks/ScWAT_WaitDelay.h"
-#include "Gameplay/Handhelds/ScWHandheldData_Melee.h"
+#include "ComboSystem/ScWComboData.h"
+#include "ComboSystem/ScWComboStateComponent.h"
+#include "ComboSystem/Tasks/ScWAT_WaitComboMoveEvent.h"
+#include "ComboSystem/Equipment/ScWEquipmentFragment_Combo.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(ScWGameplayAbility_ComboSwing)
 
@@ -17,7 +17,7 @@ UScWGameplayAbility_ComboSwing::UScWGameplayAbility_ComboSwing()
 }
 
 //~ Begin Ability
-void UScWGameplayAbility_ComboSwing::NativeActivateAbility_Committed(const FGameplayAbilitySpecHandle InHandle, const FGameplayAbilityActorInfo* InActorInfo, const FGameplayAbilityActivationInfo InActivationInfo, const FGameplayEventData* InTriggerEventData) // UGameplayAbility
+void UScWGameplayAbility_ComboSwing::ActivateAbility(const FGameplayAbilitySpecHandle InHandle, const FGameplayAbilityActorInfo* InActorInfo, const FGameplayAbilityActivationInfo InActivationInfo, const FGameplayEventData* InTriggerEventData) // UGameplayAbility
 {
 	ensureCancelAbilityReturn(InActorInfo);
 
@@ -57,7 +57,7 @@ void UScWGameplayAbility_ComboSwing::NativeActivateAbility_Committed(const FGame
 			return;
 		}
 	}*/
-	Super::NativeActivateAbility_Committed(InHandle, InActorInfo, InActivationInfo, InTriggerEventData);
+	Super::ActivateAbility(InHandle, InActorInfo, InActivationInfo, InTriggerEventData);
 }
 
 void UScWGameplayAbility_ComboSwing::OnPostSwingComboWindowFinished()
@@ -108,8 +108,11 @@ float UScWGameplayAbility_ComboSwing::BP_HandleEndSwing_Implementation()
 
 	BP_HandleSwingEndComboWindow();
 
-	ensureCancelAbilityReturn(OwnerMeleeData, OutPostSwingDelay);
-	return FMath::Max(OwnerMeleeData->PostSwingComboTimeWindow, OutPostSwingDelay);
+	ensureCancelAbilityReturn(OwnerMeleeEquipmentActor, OutPostSwingDelay);
+	const UScWEquipmentFragment_Combo* ComboFragment = Cast<UScWEquipmentFragment_Combo>(OwnerMeleeEquipmentActor->GetMeleeFragment());
+
+	ensureCancelAbilityReturn(ComboFragment, OutPostSwingDelay);
+	return FMath::Max(ComboFragment->PostSwingComboTimeWindow, OutPostSwingDelay);
 }
 
 void UScWGameplayAbility_ComboSwing::BP_HandlePostSwing_Implementation()
@@ -129,9 +132,10 @@ void UScWGameplayAbility_ComboSwing::BP_HandleSwingEndComboWindow_Implementation
 	ensureCancelAbilityReturn(OwnerComboStateComponent);
 	OwnerComboStateComponent->SetComboState(EComboState::ReadyForMove);
 
-	ensureCancelAbilityReturn(OwnerMeleeData);
-	UScWAT_WaitDelay* PostSwingComboWindowTask = UScWAT_WaitDelay::WaitDelayOrFinishNextTick(this, OwnerMeleeData->PostSwingComboTimeWindow);
-	PostSwingComboWindowTask->OnFinish.AddDynamic(this, &ThisClass::OnPostSwingComboWindowFinished);
-	PostSwingComboWindowTask->ReadyForActivation();
+	ensureCancelAbilityReturn(OwnerMeleeEquipmentActor);
+	const UScWEquipmentFragment_Combo* ComboFragment = Cast<UScWEquipmentFragment_Combo>(OwnerMeleeEquipmentActor->GetMeleeFragment());
+
+	ensureCancelAbilityReturn(ComboFragment);
+	COMMON_WAIT_DELAY_OR_FINISH_NEXT_TICK_TASK(PostSwingComboWindowTask, ComboFragment->PostSwingComboTimeWindow, OnPostSwingComboWindowFinished)
 }
 //~ End Swing

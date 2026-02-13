@@ -1,15 +1,14 @@
 // Scientific Ways
 
-#include "Gameplay/Combos/ScWComboStateComponent.h"
+#include "ComboSystem/ScWComboStateComponent.h"
 
-#include "Gameplay/Characters/ScWCharacterData.h"
+#include "Damage/ScWDamageType.h"
 
-#include "Gameplay/ScWDamageType.h"
-#include "Gameplay/ScWGameplayTags.h"
-#include "Gameplay/Combos/ScWComboData.h"
-#include "Gameplay/ScWASC_InitInterface.h"
-#include "Gameplay/Combos/ScWComboMoveData.h"
-#include "Gameplay/ScWGameplayFunctionLibrary.h"
+#include "AbilitySystem/ScWCoreTags.h"
+#include "AbilitySystem/ScWASC_InitInterface.h"
+
+#include "ComboSystem/ScWComboData.h"
+#include "ComboSystem/ScWComboMoveData.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(ScWComboStateComponent)
 
@@ -45,13 +44,6 @@ UScWComboStateComponent* UScWComboStateComponent::GetComboStateComponentFromActo
 void UScWComboStateComponent::OnRegister() // UActorComponent
 {
 	Super::OnRegister();
-
-	
-}
-
-void UScWComboStateComponent::InitFromCharacterData(const UScWCharacterData* InInitCharacterData) // IScWCharacterData_InitInterface
-{
-	ensureReturn(InInitCharacterData);
 
 	
 }

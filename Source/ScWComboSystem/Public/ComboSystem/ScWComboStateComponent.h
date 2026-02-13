@@ -2,12 +2,15 @@
 
 #pragma once
 
-#include "UnrealCombos.h"
+#include "ScWComboSystem.h"
 
-#include "ScWTypes_CommonDelegates.h"
-#include "Gameplay/Characters/ScWCharacterData_InitInterface.h"
+#include "Utils/ScWTypes_CommonDelegates.h"
 
 #include "ScWComboStateComponent.generated.h"
+
+#define MODULE_API SCWCOMBOSYSTEM_API
+
+class UGameplayEffect;
 
 UENUM(BlueprintType)
 enum class EComboState : uint8
@@ -24,8 +27,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FComboMoveEventSignature, const clas
 /**
  * 
  */
-UCLASS(Blueprintable, meta = (DisplayName = "[ScW] Combo State Component", BlueprintSpawnableComponent))
-class UNREALCOMBOS_API UScWComboStateComponent : public UActorComponent, public IScWCharacterData_InitInterface
+UCLASS(MinimalAPI, Blueprintable, meta = (DisplayName = "[ScW] Combo State Component", BlueprintSpawnableComponent))
+class UScWComboStateComponent : public UActorComponent
 {
 	GENERATED_BODY()
 	
@@ -37,16 +40,15 @@ public:
 public:
 
 	UFUNCTION(Category = "Statics", BlueprintCallable, BlueprintPure)
-	static UScWComboStateComponent* GetComboStateComponentFromActor(const AActor* InActor);
+	static MODULE_API UScWComboStateComponent* GetComboStateComponentFromActor(const AActor* InActor);
 
 	UFUNCTION(Category = "Statics", BlueprintCallable, BlueprintPure)
-	static UScWComboStateComponent* GetComboStateComponentFromActorInfo(const FGameplayAbilityActorInfo& InActorInfo);
+	static MODULE_API UScWComboStateComponent* GetComboStateComponentFromActorInfo(const FGameplayAbilityActorInfo& InActorInfo);
 //~ End Statics
 	
 //~ Begin Initialize
 protected:
 	virtual void OnRegister() override; // UActorComponent
-	virtual void InitFromCharacterData(const class UScWCharacterData* InInitCharacterData) override; // IScWCharacterData_InitInterface
 	virtual void BeginPlay() override; // UActorComponent
 //~ End Initialize
 
@@ -54,25 +56,25 @@ protected:
 public:
 
 	UFUNCTION(Category = "Combo", BlueprintCallable)
-	bool IsValid() const { return !AvailableCombos.IsEmpty(); }
+	MODULE_API bool IsValid() const { return !AvailableCombos.IsEmpty(); }
 
 	UFUNCTION(Category = "Combo", BlueprintCallable)
-	EComboState GetCurrentComboState() const { return CurrentComboState; }
+	MODULE_API EComboState GetCurrentComboState() const { return CurrentComboState; }
 
 	UFUNCTION(Category = "Combo", BlueprintCallable)
-	const class UScWComboData* GetRelevantCombo() const { return RelevantCombo; }
+	MODULE_API const class UScWComboData* GetRelevantCombo() const { return RelevantCombo; }
 
 	UFUNCTION(Category = "Combo | Queue", BlueprintCallable)
-	const class UScWComboMoveData* GetQueuedComboMove() const { return QueuedComboMove; }
+	MODULE_API const class UScWComboMoveData* GetQueuedComboMove() const { return QueuedComboMove; }
 
 	UFUNCTION(Category = "Combo | Queue", BlueprintCallable)
-	bool QueueComboMove(const class UScWComboMoveData* InComboMoveData);
+	MODULE_API bool QueueComboMove(const class UScWComboMoveData* InComboMoveData);
 
 	UFUNCTION(Category = "Combo | Queue", BlueprintCallable)
-	void AcceptQueuedComboMove();
+	MODULE_API void AcceptQueuedComboMove();
 
 	UFUNCTION(Category = "Combo | Queue", BlueprintCallable)
-	void DenyQueuedComboMove();
+	MODULE_API void DenyQueuedComboMove();
 
 	UPROPERTY(Category = "Combo | Queue", BlueprintAssignable)
 	FComboMoveEventSignature OnComboMoveQueuedDelegate;
@@ -84,13 +86,13 @@ public:
 	FComboMoveEventSignature OnQueuedComboMoveDeniedDelegate;
 
 	UFUNCTION(Category = "Combo", BlueprintCallable, meta = (AdvancedDisplay = "InUpdateRelevantCombo, InResetIfNoRelevantCombo"))
-	void AddComboMove(const class UScWComboMoveData* InComboMoveData, bool InUpdateRelevantCombo = true, bool InResetIfNoRelevantCombo = true);
+	MODULE_API void AddComboMove(const class UScWComboMoveData* InComboMoveData, bool InUpdateRelevantCombo = true, bool InResetIfNoRelevantCombo = true);
 
 	UFUNCTION(Category = "Combo", BlueprintCallable, meta = (AdvancedDisplay = "InUpdateRelevantComboOnResetOrFail"))
-	void SetComboState(EComboState InState, bool InUpdateRelevantComboOnResetOrFail = true);
+	MODULE_API void SetComboState(EComboState InState, bool InUpdateRelevantComboOnResetOrFail = true);
 
 	UFUNCTION(Category = "Combo", BlueprintCallable, meta = (AdvancedDisplay = "InResetIfNoRelevantCombo", KeyWords = "GetComboFromCurrentMoves"))
-	bool UpdateRelevantComboFromCurrentMoves(bool InResetIfNoRelevantCombo = true);
+	MODULE_API bool UpdateRelevantComboFromCurrentMoves(bool InResetIfNoRelevantCombo = true);
 
 	UPROPERTY(Category = "Combo", BlueprintAssignable)
 	FComboMoveEventSignature OnComboMoveAddedDelegate;
@@ -129,3 +131,5 @@ public:
 	TSubclassOf<UGameplayEffect> ComboFailedOwnerEffectClass;
 //~ End Effects
 };
+
+#undef MODULE_API

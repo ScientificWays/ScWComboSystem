@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "ScW UnrealCombos",
+	"FriendlyName": "[ScW] Combo System",
 	"Description": "Scientific Ways combo system plugin.",
 	"Category": "Other",
 	"CreatedBy": "zanayn",
@@ -10,25 +10,29 @@
 	"DocsURL": "",
 	"MarketplaceURL": "",
 	"SupportURL": "",
-	"CanContainContent": true,
+	"CanContainContent": false,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "UnrealCombos",
+			"Name": "ScWComboSystem",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
 	],
-	"Precompiled": true,
+	"Precompiled": false,
 	"Plugins": [
 		{
 			"Name": "GameplayAbilities",
 			"Enabled": true
 		},
 		{
-			"Name": "UnrealCommons",
+			"Name": "ScWGameCore",
+			"Enabled": true
+		},
+		{
+			"Name": "ScWEquipmentSystem",
 			"Enabled": true
 		}
 	]

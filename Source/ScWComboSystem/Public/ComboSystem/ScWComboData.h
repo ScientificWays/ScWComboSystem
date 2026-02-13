@@ -2,17 +2,19 @@
 
 #pragma once
 
-#include "UnrealCombos.h"
+#include "ScWComboSystem.h"
 
-#include "Gameplay/Handhelds/ScWTypes_Handhelds.h"
+#include "Equipment/ScWEquipmentActor_Melee.h"
 
 #include "ScWComboData.generated.h"
+
+#define MODULE_API SCWCOMBOSYSTEM_API
 
 /**
  *
  */
-UCLASS(const, Blueprintable, BlueprintType, meta = (DisplayName = "[ScW] Combo Data"))
-class UNREALCOMBOS_API UScWComboData : public UPrimaryDataAsset
+UCLASS(Const, Blueprintable, BlueprintType, meta = (DisplayName = "[ScW] Combo Data"))
+class UScWComboData : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 
@@ -46,18 +48,18 @@ public:
 	UPROPERTY(Category = "Power", EditDefaultsOnly, BlueprintReadOnly)
 	float ComboPowerMul;
 
-	UFUNCTION(Category = "Power", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Get Handheld PowerMul"))
-	float BP_GetHandheldPowerMul(const class AScWHandheld* InHandheld) const;
+	UFUNCTION(Category = "Power", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Get Equipment PowerMul"))
+	MODULE_API float BP_GetEquipmentPowerMul(const AActor* InEquipmentActor) const;
 //~ End Power
 
 //~ Begin Damage
 public:
 
-	UFUNCTION(Category = "Damage", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify HandheldDamage"))
-	float BP_ModifyHandheldDamage(const class AScWHandheld* InHandheld, float InDamage) const;
+	UFUNCTION(Category = "Damage", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify EquipmentDamage"))
+	MODULE_API float BP_ModifyEquipmentDamage(const AActor* InEquipmentActor, float InDamage) const;
 
-	UFUNCTION(Category = "Damage", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify HandheldDamageTypeClass"))
-	TSubclassOf<class UScWDamageType> BP_ModifyHandheldDamageTypeClass(const class AScWHandheld* InHandheld, TSubclassOf<class UScWDamageType> InDamageTypeClass) const;
+	UFUNCTION(Category = "Damage", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify EquipmentDamageTypeClass"))
+	MODULE_API TSubclassOf<class UScWDamageType> BP_ModifyEquipmentDamageTypeClass(const AActor* InEquipmentActor, TSubclassOf<class UScWDamageType> InDamageTypeClass) const;
 
 	UPROPERTY(Category = "Damage", EditDefaultsOnly, BlueprintReadOnly)
 	float DamageMul;
@@ -76,9 +78,11 @@ public:
 public:
 
 	UFUNCTION(Category = "Swing Variants", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify SwingVariants"))
-	void BP_ModifySwingVariants(const class AScWHandheld* InHandheld, const TArray<FScWMeleeSwingVariantData>& InVariants, TArray<FScWMeleeSwingVariantData>& OutVariants) const;
+	MODULE_API void BP_ModifySwingVariants(const AActor* InEquipmentActor, const TArray<FScWMeleeSwingVariantData>& InVariants, TArray<FScWMeleeSwingVariantData>& OutVariants) const;
 
 	UPROPERTY(Category = "Swing Variants", EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FScWMeleeSwingVariantData> OverrideSwingVariants;
 //~ End Swing Variants
 };
+
+#undef MODULE_API

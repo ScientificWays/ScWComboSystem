@@ -2,15 +2,17 @@
 
 #pragma once
 
-#include "UnrealCombos.h"
+#include "ScWComboSystem.h"
+
+#include "Abilities/Tasks/AbilityTask.h"
 
 #include "ScWAT_WaitComboStateChanged.generated.h"
 
 /**
  *
  */
-UCLASS(meta = (DisplayName = "[ScW] AT_WaitComboStateChanged"))
-class UNREALCOMBOS_API UScWAT_WaitComboStateChanged : public UAbilityTask
+UCLASS(MinimalAPI, meta = (DisplayName = "[ScW] AT_WaitComboStateChanged"))
+class UScWAT_WaitComboStateChanged : public UAbilityTask
 {
 	GENERATED_BODY()
 

@@ -2,17 +2,17 @@
 
 #pragma once
 
-#include "UnrealCombos.h"
+#include "ScWComboSystem.h"
 
-#include "Gameplay/Abilities/ScWGameplayAbility_CommonSwing.h"
+#include "Equipment/Abilities/ScWGameplayAbility_CommonSwing.h"
 
 #include "ScWGameplayAbility_ComboSwing.generated.h"
 
 /**
  * 
  */
-UCLASS(meta = (DisplayName = "[ScW] Combo Swing Gameplay Ability"))
-class UNREALCOMBOS_API UScWGameplayAbility_ComboSwing : public UScWGameplayAbility_CommonSwing
+UCLASS(MinimalAPI, meta = (DisplayName = "[ScW] Combo Swing Gameplay Ability"))
+class UScWGameplayAbility_ComboSwing : public UScWGameplayAbility_CommonSwing
 {
 
 	GENERATED_BODY()
@@ -23,7 +23,7 @@ public:
 
 //~ Begin Ability
 protected:
-	virtual void NativeActivateAbility_Committed(const FGameplayAbilitySpecHandle InHandle, const FGameplayAbilityActorInfo* InActorInfo, const FGameplayAbilityActivationInfo InActivationInfo, const FGameplayEventData* InTriggerEventData) override; // UScWGameplayAbility
+	virtual void ActivateAbility(const FGameplayAbilitySpecHandle InHandle, const FGameplayAbilityActorInfo* InActorInfo, const FGameplayAbilityActivationInfo InActivationInfo, const FGameplayEventData* InTriggerEventData) override; // UScWGameplayAbility
 
 	UFUNCTION()
 	void OnPostSwingComboWindowFinished();

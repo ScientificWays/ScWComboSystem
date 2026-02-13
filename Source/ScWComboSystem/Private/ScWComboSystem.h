@@ -2,9 +2,11 @@
 
 #pragma once
 
-#include "UnrealCommons.h"
+#include "CoreMinimal.h"
 
-class FUnrealCombosModule : public IModuleInterface
+#include "Kismet/GameplayStatics.h"
+
+class FScWComboSystemModule : public IModuleInterface
 {
 public:
 
