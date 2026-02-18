@@ -2,10 +2,9 @@
 
 #include "ComboSystem/ScWComboStateComponent.h"
 
-#include "Damage/ScWDamageType.h"
+#include "AbilitySystem/ScWAbilitySystemComponent.h"
 
-#include "Tags/ScWCoreTags.h"
-#include "AbilitySystem/ScWASC_InitInterface.h"
+#include "Tags/ScWComboTags.h"
 
 #include "ComboSystem/ScWComboData.h"
 #include "ComboSystem/ScWComboMoveData.h"
@@ -14,7 +13,7 @@
 
 UScWComboStateComponent::UScWComboStateComponent()
 {
-	
+	CurrentComboState = FScWComboTags::Combo_State_Reset;
 }
 
 //~ Begin Statics
@@ -54,39 +53,61 @@ void UScWComboStateComponent::BeginPlay() // UActorComponent
 
 	ensureReturn(IsValid());
 }
+
+/*void UScWComboStateComponent::TickComponent(float InDeltaTime, ELevelTick InTickType, FActorComponentTickFunction* InThisTickFunction) // UActorComponent
+{
+	Super::TickComponent(InDeltaTime, InTickType, InThisTickFunction);
+
+	if (TempStateDurationTimeLeft == 0.0f)
+	{
+
+	}
+	else
+	{
+		TempStateDurationTimeLeft = (TempStateDurationTimeLeft - InDeltaTime);
+
+		if (TempStateDurationTimeLeft <= 0.0f)
+		{
+			TempStateDurationTimeLeft = 0.0f;
+			SetComboState(FScWComboTags::Combo_State_Reset);
+		}
+	}
+}*/
 //~ End Initialize
 
 //~ Begin Combo
+bool UScWComboStateComponent::CanQueueNextComboMove() const
+{
+	return (CurrentComboState == FScWComboTags::Combo_State_Reset) || (CurrentComboState == FScWComboTags::Combo_State_ReadyForMove);
+}
+
 bool UScWComboStateComponent::TryQueueComboMove(const UScWComboMoveData* InComboMoveData)
 {
 	ensureReturn(InComboMoveData, false);
 
-	switch (CurrentComboState)
+	if (CurrentComboState == FScWComboTags::Combo_State_Reset)
 	{
-		case EComboState::Reset:
-		{
-			// Can queue, continue
-		}
-		case EComboState::ReadyForMove:
-		{
-			// Can queue, continue
-		}
-		case EComboState::NotYetReadyForMove:
-		{
-			// Can't queue, fail and cancel
-			SetComboState(EComboState::Failed);
-			return false;
-		}
-		case EComboState::Failed:
-		{
-			// Can't queue, skip
-			return false;
-		}
-		default:
-		{
-			// Invalid combo state, assert and skip
-			ensureReturn(false, false);
-		}
+		// Can queue, continue
+	}
+	else if (CurrentComboState == FScWComboTags::Combo_State_ReadyForMove)
+	{
+		// Can queue, continue
+	}
+	else if (CurrentComboState == FScWComboTags::Combo_State_NotYetReadyForMove)
+	{
+		// Can't queue, fail and cancel
+		SetComboState(FScWComboTags::Combo_State_Failed);
+		return false;
+	}
+	else if (CurrentComboState == FScWComboTags::Combo_State_Failed)
+	{
+		// Can't queue, skip
+		return false;
+	}
+	else
+	{
+		// Invalid combo state, assert and skip
+		ensureReturn(false, false);
 	}
 	QueuedComboMove = InComboMoveData;
 	OnComboMoveQueuedDelegate.Broadcast(QueuedComboMove);
@@ -131,55 +152,69 @@ void UScWComboStateComponent::AddComboMove(const UScWComboMoveData* InComboMoveD
 	}
 }
 
-void UScWComboStateComponent::SetComboState(EComboState InState, bool InUpdateRelevantComboOnResetOrFail)
+bool UScWComboStateComponent::SetComboState(const FGameplayTag& InState, bool InUpdateRelevantComboOnResetOrFail)
 {
-	if (CurrentComboState != InState)
+	if (CurrentComboState == InState)
 	{
-		CurrentComboState = InState;
-
-		switch (CurrentComboState)
-		{
-			case EComboState::Reset:
-			{
-				CurrentComboMoves.Empty();
-
-				if (InUpdateRelevantComboOnResetOrFail && !AvailableCombos.IsEmpty())
-				{
-					UpdateRelevantComboFromCurrentMoves(false);
-				}
-				break;
-			}
-			case EComboState::ReadyForMove:
-			{
-				break;
-			}
-			case EComboState::NotYetReadyForMove:
-			{
-				break;
-			}
-			case EComboState::Failed:
-			{
-				CurrentComboMoves.Empty();
-
-				if (InUpdateRelevantComboOnResetOrFail && !AvailableCombos.IsEmpty())
-				{
-					UpdateRelevantComboFromCurrentMoves(false);
-				}
-				if (ComboFailedOwnerEffectClass)
-				{
-					ApplyComboFailedOwnerEffect();
-				}
-				break;
-			}
-			default:
-			{
-				checkNoEntry();
-				break;
-			}
-		}
-		OnComboStateChangedDelegate.Broadcast(CurrentComboState);
+		return false;
 	}
+	UScWAbilitySystemComponent* OwnerASC = UScWAbilitySystemComponent::TryGetFromActor(GetOwner());
+	if ensure(OwnerASC)
+	{
+		OwnerASC->RemoveDynamicTagGameplayEffect(CurrentComboState);
+		OwnerASC->AddDynamicTagGameplayEffect(InState);
+	}
+	CurrentComboState = InState;
+	//TempStateDurationTimeLeft = 0.0f;
+		
+	if (CurrentComboState == FScWComboTags::Combo_State_Reset)
+	{
+		CurrentComboMoves.Empty();
+
+		if (InUpdateRelevantComboOnResetOrFail && !AvailableCombos.IsEmpty())
+		{
+			UpdateRelevantComboFromCurrentMoves(false);
+		}
+	}
+	else if (CurrentComboState == FScWComboTags::Combo_State_ReadyForMove)
+	{
+			
+	}
+	else if (CurrentComboState == FScWComboTags::Combo_State_NotYetReadyForMove)
+	{
+			
+	}
+	else if (CurrentComboState == FScWComboTags::Combo_State_Failed)
+	{
+		CurrentComboMoves.Empty();
+
+		if (InUpdateRelevantComboOnResetOrFail && !AvailableCombos.IsEmpty())
+		{
+			UpdateRelevantComboFromCurrentMoves(false);
+		}
+		if (ComboFailedOwnerEffectClass)
+		{
+			ApplyComboFailedOwnerEffect();
+		}
+		//TempStateDurationTimeLeft = 0.2f;
+	}
+	else
+	{
+		checkNoEntry();
+	}
+	OnComboStateChangedDelegate.Broadcast(CurrentComboState);
+	return true;
 }
+
+/*bool UScWComboStateComponent::SetReadyForMoveStateForDuration(float InDuration)
+{
+	if (SetComboState(FScWComboTags::Combo_State_ReadyForMove))
+	{
+		TempStateDurationTimeLeft = InDuration;
+		return true;
+	}
+	return false;
+}*/
 
 bool UScWComboStateComponent::UpdateRelevantComboFromCurrentMoves(bool InResetIfNoRelevantCombo)
 {
@@ -204,9 +239,9 @@ bool UScWComboStateComponent::UpdateRelevantComboFromCurrentMoves(bool InResetIf
 	}
 	if (InResetIfNoRelevantCombo && !OutSuccess)
 	{
-		if (CurrentComboState != EComboState::Reset)
+		if (CurrentComboState != FScWComboTags::Combo_State_Reset)
 		{
-			SetComboState(EComboState::Reset, false);
+			SetComboState(FScWComboTags::Combo_State_Reset, false);
 		}
 		else
 		{

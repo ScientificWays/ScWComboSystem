@@ -35,6 +35,7 @@ protected:
 
 //~ Begin Swing
 protected:
+	virtual void BeginSwingSequence() override; // UScWGameplayAbility_CommonSwing
 	virtual float BP_HandlePreSwing_Implementation() override; // UScWGameplayAbility_CommonSwing
 	virtual float BP_HandleEndSwing_Implementation() override; // UScWGameplayAbility_CommonSwing
 	virtual void BP_HandlePostSwing_Implementation() override; // UScWGameplayAbility_CommonSwing
@@ -42,8 +43,8 @@ protected:
 	UFUNCTION(Category = "Swing", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Handle SwingEndCombo"))
 	void BP_HandleSwingEndComboWindow();
 
-	UPROPERTY(Category = "Swing", EditDefaultsOnly, BlueprintReadOnly)
-	TObjectPtr<UScWComboMoveData> ComboMove;
+	//UPROPERTY(Category = "Swing", EditDefaultsOnly, BlueprintReadOnly)
+	//TObjectPtr<UScWComboMoveData> ComboMove;
 
 	UPROPERTY(Category = "Swing", EditDefaultsOnly, BlueprintReadOnly)
 	float PostSwingComboTimeWindow;
