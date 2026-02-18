@@ -4,9 +4,11 @@
 
 #include "ScWComboSystem.h"
 
-#include "Equipment/Abilities/ScWGameplayAbility_CommonSwing.h"
+#include "AbilitySystem/Abilities/ScWGameplayAbility_CommonSwing.h"
 
 #include "ScWGameplayAbility_ComboSwing.generated.h"
+
+class UScWComboMoveData;
 
 /**
  * 
@@ -23,12 +25,11 @@ public:
 
 //~ Begin Ability
 protected:
-	virtual void ActivateAbility(const FGameplayAbilitySpecHandle InHandle, const FGameplayAbilityActorInfo* InActorInfo, const FGameplayAbilityActivationInfo InActivationInfo, const FGameplayEventData* InTriggerEventData) override; // UScWGameplayAbility
+	virtual bool CommitAbility(const FGameplayAbilitySpecHandle InHandle, const FGameplayAbilityActorInfo* InActorInfo, const FGameplayAbilityActivationInfo InActivationInfo, FGameplayTagContainer* InOutOptionalRelevantTags) override; // UGameplayAbility
 
 	UFUNCTION()
 	void OnPostSwingComboWindowFinished();
 
-	virtual bool CanActivateAbility(const FGameplayAbilitySpecHandle InHandle, const FGameplayAbilityActorInfo* InActorInfo, const FGameplayTagContainer* InSourceTags = nullptr, const FGameplayTagContainer* InTargetTags = nullptr, OUT FGameplayTagContainer* OutOptionalRelevantTags = nullptr) const override; // UGameplayAbility
 	virtual void EndAbility(const FGameplayAbilitySpecHandle InHandle, const FGameplayAbilityActorInfo* InActorInfo, const FGameplayAbilityActivationInfo InActivationInfo, bool bInReplicateEndAbility, bool bInWasCancelled) override; // UGameplayAbility
 //~ End Ability
 
@@ -40,6 +41,12 @@ protected:
 	
 	UFUNCTION(Category = "Swing", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Handle SwingEndCombo"))
 	void BP_HandleSwingEndComboWindow();
+
+	UPROPERTY(Category = "Swing", EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UScWComboMoveData> ComboMove;
+
+	UPROPERTY(Category = "Swing", EditDefaultsOnly, BlueprintReadOnly)
+	float PostSwingComboTimeWindow;
 //~ End Swing
 
 //~ Begin Owner

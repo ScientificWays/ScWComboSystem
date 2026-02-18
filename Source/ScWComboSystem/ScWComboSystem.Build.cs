@@ -25,7 +25,7 @@ public class ScWComboSystem : ModuleRules
 			"Networking",
 
 			"ScWGameCore",
-			"ScWEquipmentSystem",
+			"ScWAbilitySystemExtensions",
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]

@@ -4,8 +4,6 @@
 
 #include "ScWComboSystem.h"
 
-#include "Equipment/ScWEquipmentActor_Melee.h"
-
 #include "ScWComboData.generated.h"
 
 #define MODULE_API SCWCOMBOSYSTEM_API
@@ -49,17 +47,17 @@ public:
 	float ComboPowerMul;
 
 	UFUNCTION(Category = "Power", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Get Equipment PowerMul"))
-	MODULE_API float BP_GetEquipmentPowerMul(const AActor* InEquipmentActor) const;
+	MODULE_API float BP_GetPowerMul(const AActor* InContextActor) const;
 //~ End Power
 
 //~ Begin Damage
 public:
 
-	UFUNCTION(Category = "Damage", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify EquipmentDamage"))
-	MODULE_API float BP_ModifyEquipmentDamage(const AActor* InEquipmentActor, float InDamage) const;
+	UFUNCTION(Category = "Damage", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify Damage"))
+	MODULE_API float BP_ModifyDamage(const AActor* InContextActor, float InDamage) const;
 
-	UFUNCTION(Category = "Damage", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify EquipmentDamageTypeClass"))
-	MODULE_API TSubclassOf<class UScWDamageType> BP_ModifyEquipmentDamageTypeClass(const AActor* InEquipmentActor, TSubclassOf<class UScWDamageType> InDamageTypeClass) const;
+	UFUNCTION(Category = "Damage", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify Damage Type Class"))
+	MODULE_API TSubclassOf<class UScWDamageType> BP_ModifyDamageTypeClass(const AActor* InContextActor, TSubclassOf<class UScWDamageType> InDamageTypeClass) const;
 
 	UPROPERTY(Category = "Damage", EditDefaultsOnly, BlueprintReadOnly)
 	float DamageMul;
@@ -78,7 +76,7 @@ public:
 public:
 
 	UFUNCTION(Category = "Swing Variants", BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "Modify SwingVariants"))
-	MODULE_API void BP_ModifySwingVariants(const AActor* InEquipmentActor, const TArray<FScWMeleeSwingVariantData>& InVariants, TArray<FScWMeleeSwingVariantData>& OutVariants) const;
+	MODULE_API void BP_ModifySwingVariants(const AActor* InContextActor, const TArray<FScWMeleeSwingVariantData>& InVariants, TArray<FScWMeleeSwingVariantData>& OutVariants) const;
 
 	UPROPERTY(Category = "Swing Variants", EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FScWMeleeSwingVariantData> OverrideSwingVariants;

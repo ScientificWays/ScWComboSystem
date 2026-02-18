@@ -62,13 +62,16 @@ public:
 	MODULE_API EComboState GetCurrentComboState() const { return CurrentComboState; }
 
 	UFUNCTION(Category = "Combo", BlueprintCallable)
+	MODULE_API bool CanQueueNextComboMove() const { return (CurrentComboState == EComboState::Reset || CurrentComboState == EComboState::ReadyForMove); }
+
+	UFUNCTION(Category = "Combo", BlueprintCallable)
 	MODULE_API const class UScWComboData* GetRelevantCombo() const { return RelevantCombo; }
 
 	UFUNCTION(Category = "Combo | Queue", BlueprintCallable)
 	MODULE_API const class UScWComboMoveData* GetQueuedComboMove() const { return QueuedComboMove; }
 
 	UFUNCTION(Category = "Combo | Queue", BlueprintCallable)
-	MODULE_API bool QueueComboMove(const class UScWComboMoveData* InComboMoveData);
+	MODULE_API bool TryQueueComboMove(const class UScWComboMoveData* InComboMoveData);
 
 	UFUNCTION(Category = "Combo | Queue", BlueprintCallable)
 	MODULE_API void AcceptQueuedComboMove();

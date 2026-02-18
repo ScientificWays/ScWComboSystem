@@ -2,6 +2,6 @@
 	"BuildId": "43139311",
 	"Modules": 
 	{
-		"UnrealCombos": "UnrealEditor-UnrealCombos.dll"
+		"ScWComboSystem": "UnrealEditor-ScWComboSystem.dll"
 	}
 }

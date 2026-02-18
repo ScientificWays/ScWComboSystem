@@ -4,7 +4,7 @@
 
 #include "Damage/ScWDamageType.h"
 
-#include "AbilitySystem/ScWCoreTags.h"
+#include "Tags/ScWCoreTags.h"
 #include "AbilitySystem/ScWASC_InitInterface.h"
 
 #include "ComboSystem/ScWComboData.h"
@@ -57,10 +57,37 @@ void UScWComboStateComponent::BeginPlay() // UActorComponent
 //~ End Initialize
 
 //~ Begin Combo
-bool UScWComboStateComponent::QueueComboMove(const UScWComboMoveData* InComboMoveData)
+bool UScWComboStateComponent::TryQueueComboMove(const UScWComboMoveData* InComboMoveData)
 {
 	ensureReturn(InComboMoveData, false);
 
+	switch (CurrentComboState)
+	{
+		case EComboState::Reset:
+		{
+			// Can queue, continue
+		}
+		case EComboState::ReadyForMove:
+		{
+			// Can queue, continue
+		}
+		case EComboState::NotYetReadyForMove:
+		{
+			// Can't queue, fail and cancel
+			SetComboState(EComboState::Failed);
+			return false;
+		}
+		case EComboState::Failed:
+		{
+			// Can't queue, skip
+			return false;
+		}
+		default:
+		{
+			// Invalid combo state, assert and skip
+			ensureReturn(false, false);
+		}
+	}
 	QueuedComboMove = InComboMoveData;
 	OnComboMoveQueuedDelegate.Broadcast(QueuedComboMove);
 	return true;

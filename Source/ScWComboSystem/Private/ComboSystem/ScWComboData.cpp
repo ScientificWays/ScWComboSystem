@@ -22,7 +22,7 @@ UScWComboData::UScWComboData()
 }
 
 //~ Begin Power
-float UScWComboData::BP_GetEquipmentPowerMul_Implementation(const AActor* InEquipmentActor) const
+float UScWComboData::BP_GetPowerMul_Implementation(const AActor* InContextActor) const
 {
 	auto OutPowerMul = ComboPowerMul;
 
@@ -38,7 +38,7 @@ float UScWComboData::BP_GetEquipmentPowerMul_Implementation(const AActor* InEqui
 //~ End Power
 
 //~ Begin Damage
-float UScWComboData::BP_ModifyEquipmentDamage_Implementation(const AActor* InEquipmentActor, float InDamage) const
+float UScWComboData::BP_ModifyDamage_Implementation(const AActor* InContextActor, float InDamage) const
 {
 	float FinalDamageMul = DamageMul;
 	float FinalDamageAdditive = DamageAdditive;
@@ -54,7 +54,7 @@ float UScWComboData::BP_ModifyEquipmentDamage_Implementation(const AActor* InEqu
 	return InDamage * FinalDamageMul + FinalDamageAdditive;
 }
 
-TSubclassOf<UScWDamageType> UScWComboData::BP_ModifyEquipmentDamageTypeClass_Implementation(const AActor* InEquipmentActor, TSubclassOf<UScWDamageType> InDamageTypeClass) const
+TSubclassOf<UScWDamageType> UScWComboData::BP_ModifyDamageTypeClass_Implementation(const AActor* InContextActor, TSubclassOf<UScWDamageType> InDamageTypeClass) const
 {
 	if (OverrideDamageTypeClass)
 	{
@@ -75,7 +75,7 @@ TSubclassOf<UScWDamageType> UScWComboData::BP_ModifyEquipmentDamageTypeClass_Imp
 //~ End Damage
 
 //~ Begin Swing Variants
-void UScWComboData::BP_ModifySwingVariants_Implementation(const AActor* InEquipmentActor, const TArray<FScWMeleeSwingVariantData>& InVariants, TArray<FScWMeleeSwingVariantData>& OutVariants) const
+void UScWComboData::BP_ModifySwingVariants_Implementation(const AActor* InContextActor, const TArray<FScWMeleeSwingVariantData>& InVariants, TArray<FScWMeleeSwingVariantData>& OutVariants) const
 {
 	OutVariants = OverrideSwingVariants.IsEmpty() ? InVariants : OverrideSwingVariants;
 }
