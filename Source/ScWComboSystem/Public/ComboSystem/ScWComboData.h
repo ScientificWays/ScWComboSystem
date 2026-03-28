@@ -9,9 +9,9 @@
 #define MODULE_API SCWCOMBOSYSTEM_API
 
 /**
- *
+ *	Data asset defining a combo sequence: its ordered moves, power/damage modifiers, and swing variant overrides.
  */
-UCLASS(Const, Blueprintable, BlueprintType, meta = (DisplayName = "[ScW] Combo Data"))
+UCLASS(MinimalAPI, Const, Blueprintable, BlueprintType, meta = (DisplayName = "[ScW] Combo Data"))
 class UScWComboData : public UPrimaryDataAsset
 {
 	GENERATED_BODY()

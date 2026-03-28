@@ -16,7 +16,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FComboStateChangedSignature, const F
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FComboMoveEventSignature, const class UScWComboMoveData*, InComboMoveData);
 
 /**
- * 
+ *	Tracks combo state, queued moves, and available combos on a pawn, broadcasting state changes and move events.
  */
 UCLASS(MinimalAPI, Blueprintable, meta = (DisplayName = "[ScW] Combo State Component", BlueprintSpawnableComponent))
 class UScWComboStateComponent : public UActorComponent

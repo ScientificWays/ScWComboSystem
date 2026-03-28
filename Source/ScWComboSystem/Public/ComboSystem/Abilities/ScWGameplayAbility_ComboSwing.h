@@ -11,7 +11,7 @@
 class UScWComboMoveData;
 
 /**
- * 
+ *	Swing ability that integrates with the combo state component to queue, accept, and chain combo moves.
  */
 UCLASS(MinimalAPI, meta = (DisplayName = "[ScW] Combo Swing Gameplay Ability"))
 class UScWGameplayAbility_ComboSwing : public UScWGameplayAbility_CommonSwing

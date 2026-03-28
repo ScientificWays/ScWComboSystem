@@ -159,7 +159,7 @@ bool UScWComboStateComponent::SetComboState(const FGameplayTag& InState, bool In
 		return false;
 	}
 	UScWAbilitySystemComponent* OwnerASC = UScWAbilitySystemComponent::TryGetFromActor(GetOwner());
-	if ensure(OwnerASC)
+	if (ensure(OwnerASC))
 	{
 		OwnerASC->RemoveDynamicTagGameplayEffect(CurrentComboState);
 		OwnerASC->AddDynamicTagGameplayEffect(InState);

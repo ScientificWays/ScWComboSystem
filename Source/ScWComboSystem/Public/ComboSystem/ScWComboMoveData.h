@@ -9,7 +9,7 @@
 #define MODULE_API SCWCOMBOSYSTEM_API
 
 /**
- *
+ *	Data asset for a single combo move, carrying per-move power and damage modifiers.
  */
 UCLASS(MinimalAPI, Const, Blueprintable, BlueprintType, meta = (DisplayName = "[ScW] Combo Move Data"))
 class UScWComboMoveData : public UPrimaryDataAsset

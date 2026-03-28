@@ -9,7 +9,7 @@
 #include "ScWAT_WaitComboStateChanged.generated.h"
 
 /**
- *
+ *	Ability task that fires when the combo state component transitions to a new state.
  */
 UCLASS(MinimalAPI, meta = (DisplayName = "[ScW] AT_WaitComboStateChanged"))
 class UScWAT_WaitComboStateChanged : public UAbilityTask
@@ -37,7 +37,7 @@ protected:
 	void OnComboStateChangedCallback();
 
 	UPROPERTY()
-	UScWComboStateComponent* ComboStateComponent = nullptr;
+	TObjectPtr<UScWComboStateComponent> ComboStateComponent = nullptr;
 
 	FScriptDelegate CallbackScriptDelegate;
 //~ End Callbacks

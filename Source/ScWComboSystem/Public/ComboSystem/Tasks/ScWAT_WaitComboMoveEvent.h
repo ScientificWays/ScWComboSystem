@@ -9,7 +9,7 @@
 #include "ScWAT_WaitComboMoveEvent.generated.h"
 
 /**
- *
+ *	Ability task that listens for combo move events (queued, accepted, denied, or added) on a combo state component.
  */
 UCLASS(MinimalAPI, meta = (DisplayName = "[ScW] AT_WaitComboMoveEvent"))
 class UScWAT_WaitComboMoveEvent : public UAbilityTask

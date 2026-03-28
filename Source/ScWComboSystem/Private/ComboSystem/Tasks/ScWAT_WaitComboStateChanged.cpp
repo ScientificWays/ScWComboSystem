@@ -9,7 +9,7 @@
 //~ Begin Initialize
 UScWAT_WaitComboStateChanged* UScWAT_WaitComboStateChanged::WaitComboStateChanged(UGameplayAbility* InOwningAbility, UScWComboStateComponent* InComboStateComponent)
 {
-	UScWAT_WaitComboStateChanged* OutTaskObject = NewAbilityTask<UScWAT_WaitComboStateChanged>(InOwningAbility);
+	ThisClass* OutTaskObject = NewAbilityTask<ThisClass>(InOwningAbility);
 	OutTaskObject->ComboStateComponent = InComboStateComponent;
 	OutTaskObject->CallbackScriptDelegate.BindUFunction(OutTaskObject, TEXT("OnComboStateChangedCallback"));
 	return OutTaskObject;
