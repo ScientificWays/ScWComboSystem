@@ -8,6 +8,8 @@
 
 #include "ScWAT_WaitComboMoveEvent.generated.h"
 
+#define MODULE_API SCWCOMBOSYSTEM_API
+
 /**
  *	Ability task that listens for combo move events (queued, accepted, denied, or added) on a combo state component.
  */
@@ -24,16 +26,16 @@ public:
 //~ Begin Initialize
 public:
 
-	UFUNCTION(BlueprintCallable, Category = "Ability | Tasks", meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
+	UFUNCTION(Category = "Ability | Tasks", BlueprintCallable, meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
 	static UScWAT_WaitComboMoveEvent* WaitComboMoveQueued(UGameplayAbility* InOwningAbility, UScWComboStateComponent* InComboStateComponent) { return WaitComboMoveCommonInit(InOwningAbility, InComboStateComponent, EVENT_TYPE_QUEUED); }
 
-	UFUNCTION(BlueprintCallable, Category = "Ability | Tasks", meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
+	UFUNCTION(Category = "Ability | Tasks", BlueprintCallable, meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
 	static UScWAT_WaitComboMoveEvent* WaitQueuedComboMoveAccepted(UGameplayAbility* InOwningAbility, UScWComboStateComponent* InComboStateComponent) { return WaitComboMoveCommonInit(InOwningAbility, InComboStateComponent, EVENT_TYPE_QUEUED_ACCEPTED); }
 
-	UFUNCTION(BlueprintCallable, Category = "Ability | Tasks", meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
+	UFUNCTION(Category = "Ability | Tasks", BlueprintCallable, meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
 	static UScWAT_WaitComboMoveEvent* WaitQueuedComboMoveDenied(UGameplayAbility* InOwningAbility, UScWComboStateComponent* InComboStateComponent) { return WaitComboMoveCommonInit(InOwningAbility, InComboStateComponent, EVENT_TYPE_QUEUED_DENIED); }
 
-	UFUNCTION(BlueprintCallable, Category = "Ability | Tasks", meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
+	UFUNCTION(Category = "Ability | Tasks", BlueprintCallable, meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
 	static UScWAT_WaitComboMoveEvent* WaitComboMoveAdded(UGameplayAbility* InOwningAbility, UScWComboStateComponent* InComboStateComponent) { return WaitComboMoveCommonInit(InOwningAbility, InComboStateComponent, EVENT_TYPE_ADDED); }
 
 protected:
@@ -61,3 +63,5 @@ protected:
 	FScriptDelegate CallbackScriptDelegate;
 //~ End Callbacks
 };
+
+#undef MODULE_API

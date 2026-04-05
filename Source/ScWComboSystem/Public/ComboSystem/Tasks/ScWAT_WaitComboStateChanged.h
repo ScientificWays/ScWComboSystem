@@ -8,6 +8,8 @@
 
 #include "ScWAT_WaitComboStateChanged.generated.h"
 
+#define MODULE_API SCWCOMBOSYSTEM_API
+
 /**
  *	Ability task that fires when the combo state component transitions to a new state.
  */
@@ -21,7 +23,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FGenericGameplayTaskDelegate OnComboStateChanged;
 
-	UFUNCTION(BlueprintCallable, Category = "Ability | Tasks", meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
+	UFUNCTION(Category = "Ability | Tasks", BlueprintCallable, meta = (HidePin = "InOwningAbility", DefaultToSelf = "InOwningAbility", BlueprintInternalUseOnly = "true"))
 	static UScWAT_WaitComboStateChanged* WaitComboStateChanged(UGameplayAbility* InOwningAbility, UScWComboStateComponent* InComboStateComponent);
 	
 //~ Begin Initialize
@@ -42,3 +44,5 @@ protected:
 	FScriptDelegate CallbackScriptDelegate;
 //~ End Callbacks
 };
+
+#undef MODULE_API

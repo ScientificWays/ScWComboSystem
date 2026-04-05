@@ -8,6 +8,8 @@
 
 #include "ScWGameplayAbility_ComboSwing.generated.h"
 
+#define MODULE_API SCWCOMBOSYSTEM_API
+
 class UScWComboMoveData;
 
 /**
@@ -57,3 +59,5 @@ protected:
 	TObjectPtr<class UScWComboStateComponent> OwnerComboStateComponent;
 //~ End Owner
 };
+
+#undef MODULE_API
